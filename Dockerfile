@@ -10,9 +10,6 @@ COPY . .
 # Download all dependencies
 RUN go mod download
 
-# Build the Go app
-RUN go build -o main .
-
 # Create a non-root user
 RUN useradd -u 10001 -U -m appuser
 
@@ -23,4 +20,4 @@ RUN chown -R appuser:appuser /go/src/go-commander
 USER appuser
 
 # Open a bash shell
-CMD ["./main"]
+# CMD ["/bin/bash"]
