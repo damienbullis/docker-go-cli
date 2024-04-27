@@ -16,10 +16,6 @@ build:
 run:
 	docker run --rm -it --name $(CONTAINER_NAME) -v $(PWD):/go/src/go-commander $(IMAGE_NAME) /bin/bash
 
-
-go:
-	docker run --rm $(IMAGE_NAME) go run .
-
 # Clean up
 clean:
 	docker stop $(CONTAINER_NAME)
