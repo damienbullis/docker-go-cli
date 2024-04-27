@@ -4,7 +4,9 @@ CONTAINER_NAME := go_commander_container
 
 # Default target
 .PHONY: build run clean test format
-.DEFAULT_GOAL := run
+.DEFAULT_GOAL := all
+
+all: build run
 
 # Build the Docker image
 build:
@@ -12,7 +14,11 @@ build:
 
 # Run the Docker container
 run:
-	docker run --rm -it --name $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run --rm -it --name $(CONTAINER_NAME) -v $(PWD):/go/src/go-commander $(IMAGE_NAME) /bin/bash
+
+
+go:
+	docker run --rm $(IMAGE_NAME) go run .
 
 # Clean up
 clean:
