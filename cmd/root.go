@@ -17,10 +17,16 @@ var rootCmd = &cobra.Command{
 
 var configFilePath string
 var verbose bool
+var config core.Config
 
 func init() {
 	rootCmd.Flags().StringVarP(&configFilePath, "config", "c", "", "config file path")
 	rootCmd.Flags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
+
+	rootCmd.Flags().BoolVarP(&config.Nested.Key3, "key3", "", false, "key3 value")
+	viper.BindPFlag("nested.key3", rootCmd.Flags().Lookup("key3"))
+
+	setConfigsDefaults()
 }
 
 // Execute executes the root command.
@@ -32,11 +38,6 @@ func run(cmd *cobra.Command, args []string) {
 	utils.InitializeLog(verbose)
 
 	loadConfigFile()
-
-	setConfigsDefaults()
-
-	// initialize config struct
-	var config core.Config
 
 	// unmarshal config into struct
 	log.Debug("Unmarshalling config")

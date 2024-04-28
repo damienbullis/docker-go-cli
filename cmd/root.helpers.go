@@ -40,8 +40,7 @@ func loadConfigFile() {
 }
 
 func setConfigsDefaults() {
-	log.Debug("Setting defaults")
 	viper.SetDefault("key1", "default1")
 	viper.SetDefault("key2", 100)
-	viper.SetDefault("nested.key3", true)
+	viper.SetDefault("nested.key3", false)
 }
