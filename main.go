@@ -10,6 +10,5 @@ func main() {
 	if err := cmd.Execute(); err != nil {
 		// Handle any errors returned by the root command execution
 		log.Fatal(err)
-		// panic(err)
 	}
 }

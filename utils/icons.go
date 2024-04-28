@@ -1,7 +1,5 @@
 package utils
 
-import "github.com/charmbracelet/log"
-
 type IconMap struct {
 	Check  string
 	Cross  string
@@ -23,14 +21,14 @@ var Icon = &IconMap{
 }
 
 func supportsEmoji() bool {
-	log.Error("Emoji support not implemented")
+	// log.Error("Emoji support not implemented")
 	return true
 }
 
 func init() {
 	// check for emoji support
 	if !supportsEmoji() {
-		log.Debug("Disabling emoji icons")
+		// log.Debug("Disabling emoji icons")
 		Icon.Check = ""
 		Icon.Cross = ""
 		Icon.Rocket = ""

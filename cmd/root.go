@@ -29,46 +29,11 @@ func Execute() error {
 }
 
 func run(cmd *cobra.Command, args []string) {
-	if verbose {
-		log.SetLevel(log.DebugLevel)
-		log.Debug("Verbose output enabled")
-	}
+	utils.InitializeLog(verbose)
 
-	// if config file path is provided, set it
-	log.Debugf("Config file provided: %s", configFilePath)
-	if configFilePath != "" {
-		viper.SetConfigFile(configFilePath)
+	loadConfigFile()
 
-		// read config file
-		if err := viper.ReadInConfig(); err != nil {
-			log.Fatal(err)
-		}
-
-		log.Infof("🔍 %s found!", viper.ConfigFileUsed())
-	} else {
-
-		log.Debugf("Using default config")
-		// set defaults config file
-		viper.SetConfigName("config")
-		viper.AddConfigPath(".")
-
-		// read config file
-		err := viper.ReadInConfig()
-		if err != nil {
-			switch err.(type) {
-			case viper.ConfigFileNotFoundError:
-				log.Info("Config file not found, using defaults")
-			default:
-				log.Fatal(err)
-			}
-		}
-	}
-
-	// set defaults
-	log.Debug("Setting defaults")
-	viper.SetDefault("key1", "default1")
-	viper.SetDefault("key2", 100)
-	viper.SetDefault("nested.key3", true)
+	setConfigsDefaults()
 
 	// initialize config struct
 	var config core.Config
@@ -82,8 +47,7 @@ func run(cmd *cobra.Command, args []string) {
 		log.Debugf("Config successfully unmarshalled! %s", utils.Icon.Tada)
 	}
 
-	// print config
-	log.Debug("Starting")
+	log.Debug("Starting...")
 	core.PrintConfig(&config)
 
 	log.Infof("Done! %s", utils.Icon.Tada)
